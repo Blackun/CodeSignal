@@ -1,4 +1,4 @@
-package com.yanolja;
+package com.demo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
@@ -135,5 +135,21 @@ public class Demo {
 		int[] A = {1,2,3};
 		int ret =solution(A);
 		logger.debug("ret : {}", mapper.writeValueAsString(ret));
+	}
+
+	public void solution2(int N){
+		for(int i=1; i<=N; i++){
+			if(i%2 == 0) System.out.print("Codility");
+			if(i%3 == 0) System.out.print("Test");
+			if(i%5 == 0) System.out.print("Coders");
+			if(i%2 > 0 && i%3>0 && i%5>0) System.out.print(i);
+			System.out.println();
+		}
+	}
+
+	@Test
+	public void test4() throws IOException {
+		int N=1000;
+		solution2(N);
 	}
 }
