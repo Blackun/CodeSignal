@@ -2,11 +2,16 @@ package com.blackun;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class ThroughTheFog {
@@ -66,10 +71,101 @@ public class ThroughTheFog {
 				.get().getKey();
 	}
 
+	int testGGuck() {
+		int result = 0;
+
+		List<Integer> lst = Arrays.asList(1,2,3,-1,5,-2,6,8,7);
+
+		lst.sort(null);
+
+		boolean find = true;
+		int before = 0;
+
+		for (int a : lst) {
+			if (a > 0) {
+				if (a > 1 && find) {
+					return 1;
+				} else {
+					find = false;
+					if (a - before > 1) {
+						return before + 1;
+					}
+				}
+				before = a;
+			}
+		}
+
+		System.out.println(lst);
+
+		return result;
+	}
+
 	@Test
 	public void test4(){
 		int[] a = {2,4,7};
-		int ret = absoluteValuesSumMinimization(a);
-		logger.info("absoluteValuesSumMinimization({}) = {}", a, ret);
+		int ret = testGGuck();
+		logger.info("absoluteValuesSumMinimization({}) = {}", 4, ret);
 	}
+
+	boolean stringsRearrangement(String[] inputArray) {
+		List<String> source = Arrays.stream(inputArray).parallel().sorted().collect(Collectors.toList());
+		List<String> ret = new ArrayList<>();
+		for(int i=0; i<inputArray.length; i++){
+			ret.add(source.remove(i));
+			while(source.size()>0) {
+				String next = findNext(source, ret.get(ret.size() - 1));
+				if(next == null) break;
+				ret.add(next);
+				logger.info("ret : {}, source : {}", ret, source);
+			}
+			if(ret.size() == inputArray.length) return true;
+			else {
+				ret.clear();
+				source = Arrays.stream(inputArray).parallel().sorted().collect(Collectors.toList());
+			}
+		}
+		return false;
+	}
+
+	String findNext(List<String> source, String s){
+		for(int i=0; i<source.size(); i++){
+			if(oneCharDiff(source.get(i), s)){
+				return source.remove(i);
+			}
+		}
+		return null;
+	}
+
+	boolean oneCharDiff(String a, String b){
+		int count = 0;
+		for(int i=0; i<a.length(); i++){
+			if(a.charAt(i) != b.charAt(i)) count++;
+		}
+		return count==1;
+	}
+
+	@Test
+	public void test0(){
+		String[] inputArray = {"a", "b", "c", "c","c","b","a"};
+		boolean ret = stringsRearrangement(inputArray);
+		logger.info("stringsRearrangement({}) = {}", inputArray, ret);
+		Assert.assertEquals(ret, true);
+	}
+
+	@Test
+	public void test8(){
+		String[] inputArray = {"ab","bb","aa"};
+		boolean ret = stringsRearrangement(inputArray);
+		logger.info("stringsRearrangement({}) = {}", inputArray, ret);
+		Assert.assertEquals(ret, true);
+	}
+
+	@Test
+	public void test06(){
+		String[] inputArray = {"abc","bef","bcc","bec","bbc","bdc"};
+		boolean ret = stringsRearrangement(inputArray);
+		logger.info("stringsRearrangement({}) = {}", inputArray, ret);
+		Assert.assertEquals(ret, true);
+	}
+
 }
