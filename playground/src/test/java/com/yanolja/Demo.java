@@ -20,12 +20,6 @@ public class Demo {
 	long start =0;
 	long end = 0;
 
-
-	int circleOfNumbers(int n, int firstNumber) {
-		return (firstNumber + n/2) % n;
-	}
-
-
 	@Before
 	public void before(){
 		start = System.nanoTime();
@@ -39,9 +33,63 @@ public class Demo {
 	}
 
 
+	void printMultiNumber(int n) {
+		for (int i = 1; i <= n; i++) {
+			boolean isprint = false;
+			if (i % 2 == 0) {
+				isprint = true;
+				System.out.print("Codility");
+			}
+
+			if (i % 3 == 0) {
+				isprint = true;
+				System.out.print("Test");
+			}
+
+			if (i % 5 == 0) {
+				isprint = true;
+				System.out.print("Coders");
+			}
+
+			if (isprint) {
+				System.out.println();
+			} else {
+				System.out.println(i);
+			}
+		}
+	}
+
+	int returnHillvallycount() {
+		List<Integer> A = Arrays.asList(2,1,3,4,3,2,1,1,2,3,4,5,4);
+
+		int countCasle = 1;
+		int positive = 0;
+		int befor = A.get(0);
+		for (int i : A) {
+			if (i > befor) {
+				if (positive != 1) {
+					positive = 1;
+					countCasle ++;
+				}
+			} else if (i < befor) {
+				if (positive != -1) {
+					positive = -1;
+					countCasle ++;
+				}
+			} else {
+				positive = 0;
+			}
+		}
+
+		return countCasle;
+	}
+
+
+
 	@Test
 	public void test1() throws IOException {
-		int ret =circleOfNumbers(10, 2);
+		int ret =returnHillvallycount();
+		//printMultiNumber(24);
 		logger.debug("ret : {}", mapper.writeValueAsString(ret));
 	}
 
