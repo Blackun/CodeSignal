@@ -60,7 +60,7 @@ public class Demo {
 	}
 
 	int returnHillvallycount() {
-		List<Integer> A = Arrays.asList(2,1,3,4,3,2,1,1,2,3,4,5,4);
+		List<Integer> A = Arrays.asList(2,1,3,4,3,3,2,1,1,2,3,4,5);
 
 		int countCasle = 1;
 		int positive = 0;
@@ -76,19 +76,63 @@ public class Demo {
 					positive = -1;
 					countCasle ++;
 				}
-			} else {
-				positive = 0;
 			}
+			befor = i;
 		}
 
 		return countCasle;
 	}
 
+	int countblaket() {
+
+		String test = "(())())";
+		int rightC = 0;
+		int leftC = 0;
+		int blacket = 0;
+		int positionL = 0;
+		int positionR = 0;
+		int result = 0;
+
+		int right = test.length() - 1;
+		int left = 0;
+
+		if(test.indexOf("(") == -1 ) return test.length();
+
+		while (right > 0 && left < test.length()) {
+
+			if (test.charAt(left) == '(') {
+				leftC ++;
+			} else {
+				left ++;
+			}
+
+			if (test.charAt(right) == ')') {
+				rightC ++;
+			} else {
+				right --;
+			}
+
+			if (leftC == rightC) {
+				positionR = right;
+				positionL = left;
+				right --;
+				left ++;
+			}
+		}
+
+		if (leftC > rightC) {
+			result = positionL;
+		} else {
+			result = positionR;
+		}
+
+		return result;
+	}
 
 
 	@Test
 	public void test1() throws IOException {
-		int ret =returnHillvallycount();
+		int ret =countblaket();
 		//printMultiNumber(24);
 		logger.debug("ret : {}", mapper.writeValueAsString(ret));
 	}

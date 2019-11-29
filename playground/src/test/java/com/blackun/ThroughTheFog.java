@@ -74,7 +74,7 @@ public class ThroughTheFog {
 	int testGGuck() {
 		int result = 0;
 
-		List<Integer> lst = Arrays.asList(1,2,3,-1,5,-2,6,8,7);
+		List<Integer> lst = Arrays.asList(-1,-2);
 
 		lst.sort(null);
 
@@ -96,6 +96,12 @@ public class ThroughTheFog {
 		}
 
 		System.out.println(lst);
+
+		if (before == 0) {
+			result = 1;
+		} else {
+			result = before+1;
+		}
 
 		return result;
 	}

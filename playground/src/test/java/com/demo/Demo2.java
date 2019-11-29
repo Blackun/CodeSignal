@@ -81,12 +81,36 @@ public class Demo2 {
 		// List<Integer> subList = aList.subList(1, aList.size()-1).stream().sorted().collect(Collectors.toList());
 		//logger.info("subList = {}", mapper.writeValueAsString(subList));
 		return aList.subList(1, aList.size()-1).stream().sorted().limit(2).collect(Collectors.summingInt(Integer::intValue));
+
+	}
+
+	public int solution3_1(int[] A){
+		int[] PQ = {A[1], A[2]};
+		for(int i=3; i<A.length-1; i++){
+			if(A[i] < PQ[0]){
+				PQ[0] = A[i];
+				continue;
+			}
+			if(A[i] < PQ[1]){
+				PQ[1] = A[i];
+				continue;
+			}
+		}
+		return PQ[0] + PQ[1];
 	}
 
 	@Test
 	public void test3() throws IOException {
 		int[] A = {1,5,2,4,6,3,7,1};
 		int ret = solution3(A);
+		logger.info("ret = {}", ret);
+		Assert.assertEquals(5, ret);
+	}
+
+	@Test
+	public void test3_1() throws IOException {
+		int[] A = {1,5,2,4,6,3,7,1};
+		int ret = solution3_1(A);
 		logger.info("ret = {}", ret);
 		Assert.assertEquals(5, ret);
 	}
